@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+   />
+    <title>Minutnik</title>
+</head>
+<body>
+
+    <header>
+        <div class="top">
+            <h1>Minutnik 7, 7, 5, 5, 3, 3</h1> <i class="fa-sharp fa-solid fa-circle-info"></i>
+        </div>
+    </header>
+    <main>
+        <div class="mainContainer">
+            <div class="level">
+                <div class="level_dot" id="level-1"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="level_dot" id="level-2"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
+                <div class="level_dot" id="level-3"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
+                <div class="level_dot" id="level-4"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
+                <div class="level_dot" id="level-5"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
+                <div class="level_dot" id="level-6"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
+            </div>
+            <div class="clockContainer">
+                <div class="clock">
+                    <div class="clock__minutes" id="clock__minutes">05</div>
+                    <div class="clock__separator"> : </div>
+                    <div class="clock__seconds" id="clock__seconds">32</div>
+ 
+                </div>
+                <div class="hourglass" id="hourglass"><i class="fa-regular fa-hourglass"></i></div>
+            </div>
+            <div class="buttonPlay" id="buttonPlay"><i class="fa-solid fa-play"></i></div>
+            <div class="actionButton">
+                <div class="button" id="button-backward"><i class="fa-solid fa-backward-step"></i></div>
+                <div class="button" id="button-forward"><i class="fa-solid fa-forward-step"></i></div>
+                <div class="button" id="button-+10">+10s</div>
+                <div class="button" id="button--10">-10s</div>
+            </div>
+        </div>
+        
+    </main>
+    <footer>
+        <div class="copyright">
+            Copyright by Wojciech Siwek
+        </div>
+    </footer>
+
+    <script src="./js/index.js"></script>
+    <script>
+        const timer = new Timer();
+        timer.initialTimer();
+      </script>
+</body>
+</html>
