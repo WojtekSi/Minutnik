@@ -36,11 +36,16 @@ main{
 .level{
     display: flex;
     justify-content: center;
+    align-items: center;
 
 }
 
 .level_dot{
     padding: 5px;
+}
+
+.level_dot--active{
+    font-size: 50px;
 }
 
 .clockContainer{
@@ -104,4 +109,16 @@ footer{
     max-width: 1000px;
     display: flex;
     justify-content: flex-end;
+}
+
+.--modificator-color-bg-red{
+    background-color: #3095f6;
+}
+
+.--modificator-color-bg-blue{
+    background-color: blue;
+}
+
+.--modificator-color-bg-green{
+    background-color: green;
 }

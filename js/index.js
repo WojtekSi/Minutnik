@@ -13,6 +13,8 @@ class Timer {
 
         this.isRun = false;
         this.iAgreeToAllarm = true;
+
+        this.idElementWhoChangeColor=["clockContainer", "buttonPlay", "button-backward", "button-forward", "button-+10", "button--10"];
     }
 
     initialTimer(){
@@ -56,14 +58,15 @@ class Timer {
     runTime(){
         this.showTimeOnScreen();
         if(this.currentTime > 0 && this.isRun){
-            console.log(this.currentTime);
-            console.log(this.isRun);
             this.currentTime = this.currentTime - 1;
-
-        setTimeout(()=>this.runTime(), 1000);
-        }else{
-        this.showTimeOnScreen();
-        this.alarm();
+            setTimeout(()=>this.runTime(), 1000);
+        }else {
+            if(this.currentTime == 0){
+                this.isRun =!this.isRun;
+            }
+            this.showTimeOnScreen();
+            this.switchButtonPlay();
+            this.alarm();
         }
         
 
@@ -80,6 +83,7 @@ class Timer {
 
     alarm(){
         console.log('alarm');
+        
     }
 
     clickButtonplus10(){
@@ -129,6 +133,7 @@ class Timer {
             this.countTime();
             this.showTimeOnScreen();
             this.levelIndicator();
+            this.switchButtonPlay();
         }
     }
 
@@ -141,6 +146,7 @@ class Timer {
             this.countTime();
             this.showTimeOnScreen();
             this.levelIndicator();
+            this.switchButtonPlay();
 
         }
     }
@@ -148,12 +154,31 @@ class Timer {
     levelIndicator(){
         for(let i=1; i<=6; i++){
             document.getElementById('level-' + i).innerHTML='<i class="fa-sharp fa-solid fa-circle-dot"></i>';
+            document.getElementById('level-' + i).classList.remove("level_dot--active");
         };
         for(let i=1; i<this.currentLevel; i++){
             document.getElementById('level-'+i).innerHTML ='<i class="fa-solid fa-circle">';
         };
-        document.getElementById('level-'+this.currentLevel).innerHTML ='<i class="fa-solid fa-location-dot"></i>';
+        document.getElementById('level-'+ this.currentLevel).innerHTML ='<i class="fa-solid fa-location-dot"></i>';
+        document.getElementById('level-' + this.currentLevel).classList.add("level_dot--active");
+        this.idElementWhoChangeColor.forEach(e => this.changeColor(e));
+
     }
 
+    changeColor(id){
+        document.getElementById(id).classList.remove('--modificator-color-bg-red','--modificator-color-bg-blue','--modificator-color-bg-green', )
+
+        if (this.currentLevel == 1 || this.currentLevel == 2){
+            document.getElementById(id).classList.add('--modificator-color-bg-red');
+        }
+
+        if (this.currentLevel == 3 || this.currentLevel == 4){
+            document.getElementById(id).classList.add('--modificator-color-bg-blue');
+        }
+
+        if (this.currentLevel == 5 || this.currentLevel == 6){
+            document.getElementById(id).classList.add('--modificator-color-bg-green');
+        }
+    }
 
 }   
