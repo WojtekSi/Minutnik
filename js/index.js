@@ -1,37 +1,51 @@
 class Timer {
     constructor(){
+        this.clock__minutes=document.getElementById("clock__minutes");
+        this.clock__seconds=document.getElementById("clock__seconds");
+        this.clockContainer=document.getElementById("clockContainer");
         this.buttonPlay=document.getElementById('buttonPlay');
         this.buttonPreviousLevel=document.getElementById('button-backward');
         this.buttonNextLevel=document.getElementById('button-forward');
-        this.buttonplus10=document.getElementById('button-+10');
-        this.buttonminus10=document.getElementById('button--10');
+        this.buttonPlus10=document.getElementById('button-+10');
+        this.buttonMinus10=document.getElementById('button--10');
+        this.childLevelsMarker=[...document.getElementById('levelsMarker').children];
         
-        this.currentTime = 60 * 7;
+        this.currentTime = 0;
         this.currentTime_minutes = 0;
         this.currentTime_seconds = 0;
         this.currentLevel = 1;
+        this.interval = null;
 
         this.isRun = false;
-        this.iAgreeToAllarm = true;
+
+        this.howManyTimeInLevel = [7,7,5,5,3,3];
+        this.withColorInLevel = ["blue","blue","green","green","black","black"];
+        this.ElementWhoChangeTheme = null;//["clockContainer", "buttonPlay", "button-backward", "button-forward", "button-+10", "button--10"];
+
+        // this.idElementWhoChangeColor=["clockContainer", "buttonPlay", "button-backward", "button-forward", "button-+10", "button--10"];
     }
 
     initialTimer(){
+        this.currentTime=60*this.howManyTimeInLevel[this.currentLevel-1];
         this.addEventListeners();
+        this.ElementWhoChangeTheme=[this.clockContainer, this.buttonPlay, this.buttonPreviousLevel, this.buttonNextLevel, this.buttonPlus10, this.buttonMinus10]
     }
 
     addEventListeners() {
         this.buttonPlay.addEventListener('click', ()=> this.clickButtonPlay());
         this.buttonPreviousLevel.addEventListener('click', ()=> this.clickButtonPreviousLevel());
         this.buttonNextLevel.addEventListener('click', ()=> this.clickButtonNextLevel());
-        this.buttonplus10.addEventListener('click', ()=> this.clickButtonplus10());
-        this.buttonminus10.addEventListener('click', ()=> this.clickButtonminus10());
+        this.buttonPlus10.addEventListener('click', ()=> this.clickButtonPlus10());
+        this.buttonMinus10.addEventListener('click', ()=> this.clickButtonminus10());
     }
 
     clickButtonPlay(){
         this.isRun = !this.isRun;
-        this.iAgreeToAllarm = true;
         if(this.isRun){
-            this.runTime();
+            this.interval=setInterval(()=>this.nextSecond(), 1000);
+        }else{
+            clearInterval(this.interval);
+            this.showTimeOnScreen();
         }
 
         this.switchButtonPlay();
@@ -44,28 +58,27 @@ class Timer {
 
     showTimeOnScreen(){
         this.countTime();
-        document.getElementById("clock__minutes").innerHTML = "0" + this.currentTime_minutes;
+        this.clock__minutes.innerHTML = "0" + this.currentTime_minutes;
         if(this.currentTime_seconds > 9){
-            document.getElementById("clock__seconds").innerHTML = this.currentTime_seconds
+            this.clock__seconds.innerHTML = this.currentTime_seconds
         } else{
-            document.getElementById("clock__seconds").innerHTML = "0" + this.currentTime_seconds
+            this.clock__seconds.innerHTML = "0" + this.currentTime_seconds
         }
     ;
-    }
+    }  
 
-    runTime(){
-        this.showTimeOnScreen();
-        if(this.currentTime > 0 && this.isRun){
-            console.log(this.currentTime);
-            console.log(this.isRun);
-            this.currentTime = this.currentTime - 1;
 
-        setTimeout(()=>this.runTime(), 1000);
+    nextSecond(){
+        if(this.currentTime > 0){
+            this.currentTime --;
+            this.showTimeOnScreen();
         }else{
-        this.showTimeOnScreen();
-        this.alarm();
+            this.currentTime = 0;
+            this.isRun = !this.isRun
+            clearInterval(this.interval);
+            this.showTimeOnScreen();
+            this.switchButtonPlay();
         }
-        
 
     }
 
@@ -79,12 +92,13 @@ class Timer {
     }
 
     alarm(){
-        console.log('alarm');
+        console.log('end time current level');
+        
     }
 
-    clickButtonplus10(){
+    clickButtonPlus10(){
         this.currentTime = this.currentTime + 10;
-        this.showTimeOnScreen();
+        if(!this.isRun)this.showTimeOnScreen();
     }
 
     clickButtonminus10(){
@@ -97,38 +111,18 @@ class Timer {
         };
     }
 
-    modeTime(e){
-        switch(e){
-            case 1:
-                this.currentTime = 60 * 7;
-                break;
-            case 2:
-                this.currentTime = 60 * 7;
-                break;
-            case 3:
-                this.currentTime = 60 * 5;
-                break;
-            case 4:
-                this.currentTime = 60 * 5;
-                break;
-            case 5:
-                this.currentTime = 60 * 3;
-                break;
-            case 6:
-                this.currentTime = 60 * 3;
-                break;
-        }
-    }
 
     clickButtonNextLevel(){
         if(this.currentLevel < 6){
             this.currentLevel++;
             this.isRun = false;
-            this.iAgreeToAllarm = false;
-            this.modeTime(this.currentLevel);
+            this.currentTime=this.howManyTimeInLevel[this.currentLevel - 1]*60;
             this.countTime();
             this.showTimeOnScreen();
             this.levelIndicator();
+            this.switchButtonPlay();
+            this.changeTheme();
+            clearInterval(this.interval);
         }
     }
 
@@ -136,24 +130,42 @@ class Timer {
         if(this.currentLevel > 1){
             this.currentLevel--;
             this.isRun = false;
-            this.iAgreeToAllarm = false;
-            this.modeTime(this.currentLevel);
+            this.currentTime=this.howManyTimeInLevel[this.currentLevel - 1]*60;
             this.countTime();
             this.showTimeOnScreen();
             this.levelIndicator();
+            this.switchButtonPlay();
+            this.changeTheme();
+            clearInterval(this.interval);
 
         }
     }
 
     levelIndicator(){
-        for(let i=1; i<=6; i++){
-            document.getElementById('level-' + i).innerHTML='<i class="fa-sharp fa-solid fa-circle-dot"></i>';
+        for(let i in this.childLevelsMarker ){
+            this.childLevelsMarker[i].innerHTML='<i class="fa-sharp fa-solid fa-circle-dot"></i>';
+            this.childLevelsMarker[i].classList.remove("level_dot--active");
         };
         for(let i=1; i<this.currentLevel; i++){
-            document.getElementById('level-'+i).innerHTML ='<i class="fa-solid fa-circle">';
+            this.childLevelsMarker[i - 1].innerHTML ='<i class="fa-solid fa-circle">';
         };
-        document.getElementById('level-'+this.currentLevel).innerHTML ='<i class="fa-solid fa-location-dot"></i>';
+        this.childLevelsMarker[this.currentLevel - 1].innerHTML ='<i class="fa-solid fa-location-dot"></i>';
+        this.childLevelsMarker[this.currentLevel - 1].classList.add("level_dot--active");
     }
 
+    changeTheme(){
+        for(let i in this.ElementWhoChangeTheme){
+            this.ElementWhoChangeTheme[i].classList.remove("level-green-button");
+            this.ElementWhoChangeTheme[i].classList.remove("level-blue-button");
+            this.ElementWhoChangeTheme[i].classList.remove("level-black-button");
+            this.ElementWhoChangeTheme[i].classList.add(`level-${this.withColorInLevel[this.currentLevel - 1]}-button`);
+        }
 
-}   
+        document.body.classList.remove("level-blue");
+        document.body.classList.remove("level-green");
+        document.body.classList.remove("level-black");
+
+        document.body.classList.add(`level-${this.withColorInLevel[this.currentLevel - 1]}`);
+    }
+
+}
