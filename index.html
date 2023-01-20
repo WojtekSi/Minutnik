@@ -15,7 +15,7 @@
    />
     <title>Minutnik</title>
 </head>
-<body>
+<body class="level-blue">
 
     <header>
         <div class="top">
@@ -24,15 +24,15 @@
     </header>
     <main>
         <div class="mainContainer">
-            <div class="level">
-                <div class="level_dot level_dot--active" id="level-1"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="level" id="levelsMarker">
+                <div class="level_dot" id="level-1"><i class="fa-solid fa-location-dot"></i></div>
                 <div class="level_dot" id="level-2"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
                 <div class="level_dot" id="level-3"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
                 <div class="level_dot" id="level-4"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
                 <div class="level_dot" id="level-5"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
                 <div class="level_dot" id="level-6"><i class="fa-sharp fa-solid fa-circle-dot"></i></div>
             </div>
-            <div class="clockContainer" id="clockContainer">
+            <div class="clockContainer level-blue-button" id="clockContainer">
                 <div class="clock">
                     <div class="clock__minutes" id="clock__minutes">07</div>
                     <div class="clock__separator"> : </div>
@@ -41,12 +41,13 @@
                 </div>
                 <div class="hourglass" id="hourglass"><i class="fa-regular fa-hourglass"></i></div>
             </div>
-            <div class="buttonPlay" id="buttonPlay"><i class="fa-solid fa-play"></i></div>
+            <div class="buttonPlay level-blue-button" id="buttonPlay"><i class="fa-solid fa-play"></i></div>
             <div class="actionButton">
-                <div class="button" id="button-backward"><i class="fa-solid fa-backward-step"></i></div>
-                <div class="button" id="button-forward"><i class="fa-solid fa-forward-step"></i></div>
-                <div class="button" id="button-+10">+10s</div>
-                <div class="button" id="button--10">-10s</div>
+                <div class="button level-blue-button" id="button-backward"><i class="fa-solid fa-backward-step"></i></div>
+                <div class="button level-blue-button" id="button-forward"><i class="fa-solid fa-forward-step"></i></div>
+                <div class="button level-blue-button" id="button-+10">+10s</div>
+                <div class="button level-blue-button" id="button--10">-10s</div>
+
             </div>
         </div>
         
