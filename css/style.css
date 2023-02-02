@@ -52,6 +52,58 @@ main{
     padding: 5px;
 }
 
+.widget{
+    position: fixed;
+    left: 50%;
+    transform: translate(100vw, 0);
+    background-color: #fff;
+    border: solid black 1px;  
+    width: 400px;
+    height: 200px;
+    padding: 20px;
+
+   }
+
+.widgetShow{
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #fff;
+    border: solid black 1px;  
+    width: 400px;
+    height: 200px;
+    padding: 20px;
+    animation-name: showWidgetOnScreen;
+    animation-duration: 2s;
+}
+@keyframes showWidgetOnScreen {
+    from {transform: translate(100vw, 0);}
+    to { transform: translate(-50%, 0);}
+    }
+
+    .widgetHidden{
+        position: fixed;
+        left: 50%;
+        transform: translate(100vw, 0);
+        background-color: #fff;
+        border: solid black 1px;  
+        width: 400px;
+        height: 200px;
+        padding: 20px;
+        animation-name: hiddenWidgetOnScreen;
+        animation-duration: 2s;
+    }
+    @keyframes hiddenWidgetOnScreen {
+        from { transform: translate(-50%, 0);}
+        to {transform: translate(100vw, 0);}
+        }
+
+
+   .boxClose{
+    display: flex;
+    justify-content: flex-end;
+  }
+
 .mainContainer{
     margin: 0 auto;
     max-width: 800px;
